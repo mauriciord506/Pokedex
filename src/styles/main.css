@@ -257,78 +257,79 @@ h6 {
 
 .App {
   margin: 0 auto;
-  max-width: 90em;
+  max-width: $mantine-breakpoint-xl;
 }
 
 header {
   padding-top: 2rem;
-}
 
-header .header-wrapper {
+  .header-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-  }
 
-header .header-wrapper .left-column {
+    .left-column {
       display: flex;
       align-items: flex-start;
       flex: 1;
       gap: 0.5rem;
-    }
 
-@media (min-width: 30em) {
-
-header .header-wrapper .left-column {
+      @media (min-width: $mantine-breakpoint-xs) {
         flex-direction: row;
         gap: 1rem;
         align-items: center;
-        justify-content: space-evenly
-    }
+        justify-content: space-evenly;
       }
+    }
 
-header .header-wrapper .right-column .theme-switch {
+    .right-column {
+      .theme-switch {
         position: absolute;
         right: 0;
-        top: calc(-1.3125rem * var(--mantine-scale));
+        top: -21px;
       }
+    }
+  }
+}
 
-.actionicons-navbar-container.generation-container {
+.actionicons-navbar-container {
+  &.generation-container {
     justify-content: center;
   }
 
-.actionicons-navbar-container button span {
+  button span {
     position: relative;
   }
 
-.actionicons-navbar-container button span::after {
+  button span::after {
     content: "3";
     display: block;
     position: absolute;
     width: 100%;
-    height: calc(0.25rem * var(--mantine-scale));
+    height: 4px;
     left: 0;
     bottom: 0;
     background-color: var(--mantine-primary-color-filled);
-    border-radius: calc(1.25rem * var(--mantine-scale)) calc(1.25rem * var(--mantine-scale)) 0rem 0rem;
+    border-radius: 20px 20px 0px 0px;
     opacity: 0;
     transform: scaleX(0);
   }
 
-.actionicons-navbar-container button.active {
+  button.active {
     border-color: var(--mantine-primary-color-filled);
     background-color: var(--mantine-color-white);
     color: var(--mantine-primary-color-filled) !important;
-  }
 
-.actionicons-navbar-container button.active span::after {
+    span::after {
       transition: all .3s;
       opacity: 1;
       transform: scaleX(1);
     }
+  }
+}
 
 
 .filter-container,
@@ -337,15 +338,16 @@ header .header-wrapper .right-column .theme-switch {
   display: flex;
   flex-direction: column;
   gap: 2.25rem;
-}
 
-
-.filter-container nav.filter-navigation ul, .sortby-container nav.filter-navigation ul {
+  nav.filter-navigation {
+    ul {
       list-style: none;
       display: flex;
       flex-wrap: wrap;
       gap: 0.25rem;
     }
+  }
+}
 
 .clearfix::after {
   content: "";
@@ -353,30 +355,32 @@ header .header-wrapper .right-column .theme-switch {
   clear: both;
 }
 
-.pokemon-grid .pokemon-card {
+.pokemon-grid {
+  .pokemon-card {
     float: left;
     padding: 1rem;
-    width: calc(14.5rem * var(--mantine-scale));
-    height: calc(14.375rem * var(--mantine-scale));
+    width: 232px;
+    height: 230px;
     margin: 0 0.5rem 0.5rem 0;
     border-radius: 0.5rem;
     box-shadow: var(--mantine-shadow-md);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-  }
 
-.pokemon-grid .pokemon-card .pokemon-card-image {
+    .pokemon-card-image {
       display: flex;
       width: 100%;
-      max-width: calc(7.8125rem * var(--mantine-scale));
-      height: calc(6.25rem * var(--mantine-scale));
+      max-width: 125px;
+      height: 100px;
       margin: 0 auto;
     }
+  }
+}
 
 [class="pokemon-card"],
 button[class*="ActionIcon"] {
-  border: calc(0.0625rem * var(--mantine-scale)) solid;
+  border: 1px solid;
 }
 
 .pokemons {
@@ -474,11 +478,13 @@ button[class*="ActionIcon"] {
 }
 
 footer {
-  padding: calc(1rem * var(--mantine-scale)) calc(2rem * var(--mantine-scale));
+  padding: 16px 32px;
   background-color: #f5f5f5;
   text-align: center;
 }
 
-html[data-mantine-color-scheme="dark"] .pokemon-card {
+html[data-mantine-color-scheme="dark"] {
+  .pokemon-card {
     border-color: var(--mantine-color-dark-light-color);
   }
+}
