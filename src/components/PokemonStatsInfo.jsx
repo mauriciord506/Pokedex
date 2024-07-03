@@ -1,8 +1,12 @@
 import { Tabs } from "@mantine/core";
-function PokemonStatsInfo({ data }) {
+import AboutTabsTable from "./AboutTabsTable";
+function PokemonStatsInfo({ tabsData }) {
+
   return (
     <Tabs defaultValue="about" inverted>
-      <Tabs.Panel value="about">About Panel</Tabs.Panel>
+      <Tabs.Panel value="about">
+      <AboutTabsTable data={tabsData}/>
+      </Tabs.Panel>
       <Tabs.Panel value="stats">Stats Panel</Tabs.Panel>
       <Tabs.Panel value="evolution">Evolution Panel</Tabs.Panel>
       <Tabs.List>

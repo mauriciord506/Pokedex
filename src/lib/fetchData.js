@@ -97,7 +97,7 @@ export async function fetchData(
   async function getSinglePokemonData(pokemon) {
     try {
       const POKEMON_DATA = await getPokemonData(
-        `${SPECIES_ENDPOINT}${pokemon}`
+        `${SPECIES_ENDPOINT}${pokemon}/`
       );
       return POKEMON_DATA;
     } catch (e) {

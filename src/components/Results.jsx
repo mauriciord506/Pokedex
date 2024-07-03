@@ -48,7 +48,7 @@ function Results() {
         <PokemonInfoModal title={selectedPokemonId}>
           <PokemonInformation
             pokemon={
-              data.filter((dataset) => dataset.id === selectedPokemonId)[0]
+              data.find((dataset) => dataset.id === selectedPokemonId)
             }
           />
         </PokemonInfoModal>

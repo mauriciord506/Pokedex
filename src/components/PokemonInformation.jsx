@@ -13,17 +13,17 @@ function PokemonInformation({ pokemon }) {
   const lang = getPokemonLanguage(pokemon.id);
   const PokemonData = {
     info: {
-      generation: generationNumber,
-      genera: getLanguageTextEntries(lang, pokemon.genera)[0],
       description: getLanguageTextEntries(lang, pokemon.flavor_text_entries)[0],
+      genera: getLanguageTextEntries(lang, pokemon.genera)[0],
       types: getPokemonTypes(pokemon.types),
     },
     tabsData: {
       about: {
-        weight: pokemon.weight,
-        height: pokemon.height,
+        generation: generationNumber,
         habitat: pokemon.habitat || "Unknown",
         abilities: getAbilities(pokemon.abilities),
+        height: pokemon.height,
+        weight: pokemon.weight,
       },
       evolution: getEvolutionChain(pokemon.evolution),
       stats: pokemon.stats,
@@ -51,7 +51,7 @@ function PokemonInformation({ pokemon }) {
         <Group>{PokemonData.info.types[0]}</Group>
         <Title order={2}>{`${PokemonData.info.genera?.genus}:`}</Title>
         <Text>{PokemonData.info.description?.flavor_text}</Text>
-        <PokemonStatsInfo data={""} />
+        <PokemonStatsInfo tabsData={PokemonData.tabsData} />
       </div>
     </>
   );
