@@ -35,7 +35,7 @@ function PokeCard({ pokemon, setSelectedPokemonId }) {
           #<span className="id">{`${pokemon.id}`}</span>
         </Text>
         <Title
-          order={3}
+          order={4}
           c="dark.9"
           ta="center"
           tt={"capitalize"}

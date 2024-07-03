@@ -8,12 +8,18 @@ import { PokeDataContext } from "../context/PokeDataContext";
 import { FilterAndSortContext } from "../context/FilterAndSortContext";
 function Results() {
   const { data } = useContext(PokeDataContext);
-  const { filterBy, sortByValue, sortByOptions } =
+  const { filterBy, setFilterBy, sortByValue, setSortByValue, sortByOptions } =
     useContext(FilterAndSortContext);
   const ISOTOPE = useRef(null);
   const prevFilterByValue = useRef(filterBy);
   const prevSortedByValue = useRef(sortByValue);
   const [selectedPokemonId, setSelectedPokemonId] = useState(null);
+
+  useEffect(() => {
+    setFilterBy("*");
+    setSortByValue("orginal-order");
+  }, [data, setFilterBy, setSortByValue]);
+
   useEffect(() => {
     ISOTOPE.current = new Isotope(".pokemon-grid", {
       itemSelector: ".pokemon-card",
@@ -51,8 +57,8 @@ function Results() {
           <PokemonInformation pokemon={data} />
         </PokemonInfoModal>
       )}
-      <Grid className="pokemon-grid">
-        <Grid.Col span={{ base: 12 }} className="clearfix">
+      <Grid className="pokemon-grid" justify="center">
+        <Grid.Col span={{ base: 12 }}>
           {data && !Array.isArray(data) ? (
             <PokeCard
               setSelectedPokemonId={setSelectedPokemonId}

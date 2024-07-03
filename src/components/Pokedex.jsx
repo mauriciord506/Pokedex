@@ -26,9 +26,9 @@ function Pokedex() {
     <MantineProvider theme={theme}>
       <PokeDataContextProvider>
         <SearchContextProvider>
-          <Header />
-          <GenerationsNavBar />
           <FilterAndSortContextProvider>
+            <Header />
+            <GenerationsNavBar />
             <FilterGrid />
             <PokemonInfoModalContextProvider>
               <Results />

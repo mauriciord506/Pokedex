@@ -29,13 +29,20 @@ function getPokemonTypes(types_array) {
   return [badges, pokemonType];
 }
 
+function getPokemonIDFromURL(endpoint_url) {
+  const regex = /\/(\d+)\/$/;
+  const match = endpoint_url.match(regex);
+  if (match) {
+    return match[1];
+  }
+  return null;
+}
+function getPokemonLanguage(pokemon_id) {
+  /*Pokemon API is not consitent with Language entries for Genus and Flavors text descriptons this function return default language based on Pokemon ID*/
+  return pokemon_id < 899 ? "es" : "en";
+}
 function getLanguageTextEntries(lang, entries) {
   return entries.filter((entry) => entry.language.name === lang);
-}
-function getDescriptionVersion(text_description_array, version) {
-  return text_description_array.filter(
-    (entry) => entry.version.name === version
-  );
 }
 function getAbilities(abilities) {
   return abilities.map((skill) => skill.ability.name);
@@ -59,9 +66,10 @@ function getEvolutionChain(obj) {
 }
 
 export {
+  getPokemonIDFromURL,
+  getPokemonLanguage,
   getPokemonTypes,
   getLanguageTextEntries,
-  getDescriptionVersion,
   getAbilities,
   getEvolutionChain,
 };

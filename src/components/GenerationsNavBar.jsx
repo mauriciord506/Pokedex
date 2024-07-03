@@ -2,6 +2,8 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { ActionIcon, Grid } from "@mantine/core";
 import { fetchApi } from "../lib/fetchApi";
 import { PokeDataContext } from "../context/PokeDataContext";
+import usePokeCachedData from "../customHooks/usePokeCachedData";
+import LZString from "lz-string";
 
 /**
  * Renders a navigation bar for selecting Pokémon generations.
@@ -20,7 +22,8 @@ function GenerationsNavBar() {
     { number: 9, charCode: "8552" },
   ];
   const [selectedGeneration, setSelectedGeneration] = useState(1);
-  const { setData } = useContext(PokeDataContext);
+  const { data, setData } = useContext(PokeDataContext);
+  usePokeCachedData(data);
   const aboutControllerRef = useRef(null);
   const gradientColor = { from: "indigo", to: "blue", deg: 311 };
 
@@ -44,7 +47,7 @@ function GenerationsNavBar() {
     aboutControllerRef.current = controller;
 
     // Asynchronous function to fetch data
-    (async () => {
+    async function reqPokeAPI() {
       try {
         // Call the fetchApi function with the provided signal, selectedGeneration, and null parameter
         const results = await fetchApi(signal, selectedGeneration, null);
@@ -61,7 +64,23 @@ function GenerationsNavBar() {
           console.error("Fetch error:", error);
         }
       }
-    })();
+    }
+    const cachedDataObj = JSON.parse(
+      localStorage.getItem(`PokeCachedGen-${selectedGeneration}`)
+    );
+    if (cachedDataObj && +cachedDataObj.generation === selectedGeneration) {
+      try {
+        const cachedData = JSON.parse(
+          LZString.decompress(cachedDataObj.dataSet)
+        );
+        setData(cachedData);
+      } catch (error) {
+        console.error("Error descomprimido los datos del caché", error);
+        reqPokeAPI();
+      }
+    } else {
+      reqPokeAPI();
+    }
 
     // Cleanup function to be called when the component is unmounted or the dependency array changes
     return () => {
@@ -80,7 +99,6 @@ function GenerationsNavBar() {
                 <ActionIcon
                   key={`gen-btn-${gen.number}`}
                   onClick={(e) => {
-                    console.log(e.target);
                     handleClick(gen.number);
                   }}
                   variant={

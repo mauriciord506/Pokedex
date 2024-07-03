@@ -1,3 +1,5 @@
+import { getPokemonIDFromURL } from "../helpers/helperFN";
+
 /**
  * Fetches Pokemon data from the PokeAPI based on the provided generation number, Pokemon name, or Pokemon ID.
  *
@@ -24,7 +26,7 @@ export async function fetchData(
   }
   async function getPokemonData(SPECIES_ENDPOINT_URL) {
     try {
-      const Id = SPECIES_ENDPOINT_URL.match(/pokemon-species\/([^/]+)/)[1];
+      const Id = getPokemonIDFromURL(SPECIES_ENDPOINT_URL);
       const [POKEMON_RESPONSE, SPECIES_RESPONSE] = await Promise.all([
         fetchApi(`${POKEMON_ENDPOINT}${Id}`),
         fetchApi(SPECIES_ENDPOINT_URL),
@@ -36,8 +38,9 @@ export async function fetchData(
       }
       const POKEMON_DATA = await POKEMON_RESPONSE.json();
       const SPECIES_DATA = await SPECIES_RESPONSE.json();
-      const GENERATION_NUMBER =
-        SPECIES_DATA.generation.url.match(/generation\/([^/]+)/)[1];
+      const GENERATION_NUMBER = getPokemonIDFromURL(
+        SPECIES_DATA.generation.url
+      );
       const EVOLUTION_RESPONSE = await fetchApi(
         SPECIES_DATA.evolution_chain.url
       );
