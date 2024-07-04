@@ -57,7 +57,10 @@ function getEvolutionChain(obj) {
       return;
     }
     evolutionArray.forEach((evolution) => {
-      evolutionChain.push(evolution.species);
+      evolutionChain.push({
+        ...evolution.species,
+        min_level: evolution.evolution_details[0].min_level,
+      });
       traverse(evolution.evolves_to);
     });
   }

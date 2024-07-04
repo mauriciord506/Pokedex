@@ -1,4 +1,5 @@
 import "@mantine/core/styles.css";
+import "@mantine/charts/styles.css";
 import "../index.css";
 import { createTheme, MantineProvider } from "@mantine/core";
 import Header from "./Header";

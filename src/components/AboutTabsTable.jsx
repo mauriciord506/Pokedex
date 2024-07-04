@@ -12,29 +12,49 @@ function AboutTabsTable({ data }) {
     8: "8551",
     9: "8552",
   };
-  const tableHeadins = Object.keys(data.about).map((key) => (
-    <Table.Th tt={`capitalize`}>{key}</Table.Th>
+  const tableHeadins = Object.keys(data.about).map((key, index) => (
+    <Table.Th key={`th-${key}-${index}`} tt={`capitalize`}>
+      {key}
+    </Table.Th>
   ));
-  const tableRows = Object.values(data.about).map((value) => {
+  const tableRows = Object.values(data.about).map((value, index, array) => {
     if (Array.isArray(value)) {
       const listItems = [];
-      value.forEach((item) =>
-        listItems.push(<List.Item tt={`capitalize`}>{item}</List.Item>)
+      value.forEach((item, index) =>
+        listItems.push(
+          <List.Item key={`power-${index}`} tt={`capitalize`}>
+            {item}
+          </List.Item>
+        )
       );
       return (
-        <List size={`sm`} listStyleType={`none`}>
-          {listItems}
-        </List>
+        <Table.Td key={`td-${value}-${index}`}>
+          <List size={`sm`} listStyleType={`none`}>
+            {listItems}
+          </List>
+        </Table.Td>
       );
     } else {
-      return <Table.Td>{value}</Table.Td>;
+      return (
+        <Table.Td key={`td-${value}-${index}`}>
+          {index === 0
+            ? `Gen-${String.fromCharCode(romanNumbers[value])}`
+            : value}
+        </Table.Td>
+      );
     }
   });
   return (
     <Table>
-      <Table.Caption>{`Pokemon Stats`}</Table.Caption>
-      <Table.Thead>{tableHeadins}</Table.Thead>
-      <Table.Tr style={{ verticalAlign: "text-top" }}>{tableRows}</Table.Tr>
+      <Table.Caption>{`Pokémon Information`}</Table.Caption>
+      <Table.Thead>
+        <Table.Tr>{tableHeadins}</Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>
+        <Table.Tr tt={`capitalize`} style={{ verticalAlign: "text-top" }}>
+          {tableRows}
+        </Table.Tr>
+      </Table.Tbody>
     </Table>
   );
 }
