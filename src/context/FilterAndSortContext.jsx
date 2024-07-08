@@ -8,7 +8,7 @@ export function FilterAndSortContextProvider({ children }) {
   const sortByOptions = {
     name: ".name",
     id: ".id parseInt",
-    category: "[data-category]",
+    type: "[data-type]",
   };
   return (
     <FilterAndSortContext.Provider

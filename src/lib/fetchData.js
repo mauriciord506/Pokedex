@@ -1,4 +1,4 @@
-import { getPokemonIDFromURL } from "../helpers/helperFN";
+import { getPokemonNameOrIdFromURL } from "../helpers/helperFN";
 
 /**
  * Fetches Pokemon data from the PokeAPI based on the provided generation number, Pokemon name, or Pokemon ID.
@@ -13,8 +13,7 @@ import { getPokemonIDFromURL } from "../helpers/helperFN";
 export async function fetchData(
   abortSignal,
   generation_number,
-  pokemon_name,
-  pokemon_Id
+  pokemonNameOrId
 ) {
   const PokeAPI_URL = "https://pokeapi.co/api/v2";
   const GENERATION_ENDPOINT = `${PokeAPI_URL}/generation/`;
@@ -26,19 +25,19 @@ export async function fetchData(
   }
   async function getPokemonData(SPECIES_ENDPOINT_URL) {
     try {
-      const Id = getPokemonIDFromURL(SPECIES_ENDPOINT_URL);
+      const IdOrName = getPokemonNameOrIdFromURL(SPECIES_ENDPOINT_URL);
       const [POKEMON_RESPONSE, SPECIES_RESPONSE] = await Promise.all([
-        fetchApi(`${POKEMON_ENDPOINT}${Id}`),
+        fetchApi(`${POKEMON_ENDPOINT}${IdOrName}`),
         fetchApi(SPECIES_ENDPOINT_URL),
       ]);
       if (!POKEMON_RESPONSE.ok || !SPECIES_RESPONSE.ok) {
         throw new Error(
-          `Error fetching Pokemon data from ${POKEMON_ENDPOINT}${Id} or ${SPECIES_ENDPOINT_URL}`
+          `Error fetching Pokemon data from ${POKEMON_ENDPOINT}${IdOrName} or ${SPECIES_ENDPOINT_URL}`
         );
       }
       const POKEMON_DATA = await POKEMON_RESPONSE.json();
       const SPECIES_DATA = await SPECIES_RESPONSE.json();
-      const GENERATION_NUMBER = getPokemonIDFromURL(
+      const GENERATION_NUMBER = getPokemonNameOrIdFromURL(
         SPECIES_DATA.generation.url
       );
       const EVOLUTION_RESPONSE = await fetchApi(
@@ -94,10 +93,10 @@ export async function fetchData(
       console.error(e);
     }
   }
-  async function getSinglePokemonData(pokemon) {
+  async function getSinglePokemonData(pokemonNameOrId) {
     try {
       const POKEMON_DATA = await getPokemonData(
-        `${SPECIES_ENDPOINT}${pokemon}/`
+        `${SPECIES_ENDPOINT}${pokemonNameOrId}/`
       );
       return POKEMON_DATA;
     } catch (e) {
@@ -106,8 +105,7 @@ export async function fetchData(
   }
   if (generation_number) {
     return getPokemonGen(`${GENERATION_ENDPOINT}${generation_number}/`);
-  } else if (pokemon_name || pokemon_Id) {
-    let pokemon = pokemon_name || pokemon_Id;
-    return getSinglePokemonData(pokemon.toLowerCase());
+  } else if (pokemonNameOrId) {
+    return getSinglePokemonData(pokemonNameOrId.toLowerCase());
   }
 }

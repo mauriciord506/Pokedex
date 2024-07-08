@@ -14,7 +14,7 @@ export const fetchApi = async (
   pokemonNameOrId
 ) => {
   const results = generation_number
-    ? await fetchData(controllerSignal, generation_number)
+    ? await fetchData(controllerSignal, generation_number, null)
     : pokemonNameOrId
     ? await fetchData(controllerSignal, null, pokemonNameOrId)
     : console.error("Wrong parameters");

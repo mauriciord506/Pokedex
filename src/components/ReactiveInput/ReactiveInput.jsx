@@ -3,9 +3,9 @@ import { Input } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { fromEvent } from "rxjs";
 import { debounceTime, map, distinctUntilChanged } from "rxjs/operators";
-import { SearchContext } from "../context/SearchContext";
-import { PokeDataContext } from "../context/PokeDataContext";
-import { fetchApi } from "../lib/fetchApi";
+import { SearchContext } from "../../context/SearchContext";
+import { PokeDataContext } from "../../context/PokeDataContext";
+import { fetchApi } from "../../lib/fetchApi";
 
 function ReactiveInput() {
   const inputRef = useRef(null);
@@ -40,7 +40,7 @@ function ReactiveInput() {
     if (searchContextValue) {
       (async () => {
         const results = await fetchApi(signal, null, searchContextValue);
-        setData(results);
+        results ? setData([results]) : setData(results);
         setSearchContextValue("");
       })();
     }

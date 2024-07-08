@@ -6,7 +6,7 @@ import {
   IconSort09,
   IconBolt,
 } from "@tabler/icons-react";
-import { FilterAndSortContext } from "../context/FilterAndSortContext";
+import { FilterAndSortContext } from "../../context/FilterAndSortContext";
 
 function SortByNavBar() {
   const { sortByValue, sortByOptions, setSortByValue } =

@@ -1,6 +1,6 @@
 import { Grid } from "@mantine/core";
-import FilterNavBar from "./FilterNavBar";
-import SortByNavBar from "./SortByNavBar";
+import FilterNavBar from "../FilterNavBar/FilterNavBar";
+import SortByNavBar from "../SortByNavBar/SortByNavBar";
 
 function FilterGrid() {
   return (

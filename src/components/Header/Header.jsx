@@ -1,6 +1,6 @@
-import Logo from "./Logo";
-import ReactiveInput from "./ReactiveInput";
-import ThemeSwitch from "./ThemeSwitch";
+import Logo from "../Logo/Logo";
+import ReactiveInput from "../ReactiveInput/ReactiveInput";
+import ThemeSwitch from "../ThemeSwitch/ThemeSwitch";
 
 function Header() {
   return (

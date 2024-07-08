@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { ActionIcon, Image, List, Title, Tooltip } from "@mantine/core";
 import { IconPokeball } from "@tabler/icons-react";
-import { PokeDataContext } from "../context/PokeDataContext";
-import { FilterAndSortContext } from "../context/FilterAndSortContext";
-import Icons from "../images/Images";
+import { PokeDataContext } from "../../context/PokeDataContext";
+import { FilterAndSortContext } from "../../context/FilterAndSortContext";
+import Icons from "../../images/Images";
 
 function FilterNavBar() {
   const { data } = useContext(PokeDataContext);
@@ -27,7 +27,7 @@ function FilterNavBar() {
       </Title>
       <nav className="filter-navigation">
         <List>
-          {Array.isArray(data)
+          {Array.isArray(data) && data[0]
             ? getPokemonTypes(data).map((type, index) => (
                 <List.Item key={`filter-item-${index + 1}`}>
                   <Tooltip

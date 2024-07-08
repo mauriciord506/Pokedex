@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { ActionIcon, Grid } from "@mantine/core";
-import { fetchApi } from "../lib/fetchApi";
-import { PokeDataContext } from "../context/PokeDataContext";
-import usePokeCachedData from "../customHooks/usePokeCachedData";
+import { fetchApi } from "../../lib/fetchApi";
+import { PokeDataContext } from "../../context/PokeDataContext";
+import usePokeCachedData from "../../customHooks/usePokeCachedData";
 import LZString from "lz-string";
 
 /**

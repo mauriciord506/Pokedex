@@ -4,7 +4,6 @@ import LZString from "lz-string";
 const usePokeCachedData = (data) => {
   useEffect(() => {
     if (!Array.isArray(data)) {
-      console.warn("Datos no válidos proporcionados");
       return;
     }
 

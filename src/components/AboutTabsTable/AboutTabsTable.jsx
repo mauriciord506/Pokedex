@@ -1,23 +1,12 @@
 import { List, Table } from "@mantine/core";
 
 function AboutTabsTable({ data }) {
-  const romanNumbers = {
-    1: "8544",
-    2: "8545",
-    3: "8546",
-    4: "8547",
-    5: "8548",
-    6: "8549",
-    7: "8550",
-    8: "8551",
-    9: "8552",
-  };
   const tableHeadins = Object.keys(data.about).map((key, index) => (
     <Table.Th key={`th-${key}-${index}`} tt={`capitalize`}>
       {key}
     </Table.Th>
   ));
-  const tableRows = Object.values(data.about).map((value, index, array) => {
+  const tableRows = Object.values(data.about).map((value, index) => {
     if (Array.isArray(value)) {
       const listItems = [];
       value.forEach((item, index) =>
@@ -36,16 +25,17 @@ function AboutTabsTable({ data }) {
       );
     } else {
       return (
-        <Table.Td key={`td-${value}-${index}`}>
-          {index === 0
-            ? `Gen-${String.fromCharCode(romanNumbers[value])}`
-            : value}
+        <Table.Td
+          tt={value.match(/cm/) ? "lowercase" : null}
+          key={`td-${value}-${index}`}
+        >
+          {value}
         </Table.Td>
       );
     }
   });
   return (
-    <Table>
+    <Table withTableBorder>
       <Table.Caption>{`Pokémon Information`}</Table.Caption>
       <Table.Thead>
         <Table.Tr>{tableHeadins}</Table.Tr>

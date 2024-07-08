@@ -1,16 +1,19 @@
 import { useContext } from "react";
 import { Image, Group, Stack, Title, Text } from "@mantine/core";
+import { PokemonInfoModalContext } from "../../context/PokemonInfoModalContext";
+import { SelectedPokemonIdContext } from "../../context/SelectedPokemonIdContext";
+import { getPokemonTypes } from "../../helpers/helperFN";
+import PokemonTypes from "../PokemonTypes/PokemonTypes";
 
-import { PokemonInfoModalContext } from "../context/PokemonInfoModalContext";
-import { getPokemonTypes } from "../helpers/helperFN";
-function PokeCard({ pokemon, setSelectedPokemonId }) {
+function PokeCard({ pokemon }) {
   const pokemonImageSource =
     pokemon.sprites.other.dream_world.front_default ||
     pokemon.sprites.other["official-artwork"].front_default;
 
   const { handlers } = useContext(PokemonInfoModalContext);
+  const { setSelectedPokemonId } = useContext(SelectedPokemonIdContext);
 
-  const pokemonTypes = getPokemonTypes(pokemon.types);
+  const pokemonTypesString = getPokemonTypes(pokemon.types);
   return (
     <div
       onClick={() => {
@@ -18,8 +21,8 @@ function PokeCard({ pokemon, setSelectedPokemonId }) {
         setSelectedPokemonId(pokemon.id);
         handlers.open();
       }}
-      className={`pokemon-card ${pokemonTypes[1][0]}`}
-      data-category={pokemonTypes[1].join(" ")}
+      className={`pokemon-card ${pokemonTypesString[0]}`}
+      data-type={pokemonTypesString.join(" ")}
     >
       <div className="pokemon-card-image">
         <Image
@@ -46,7 +49,7 @@ function PokeCard({ pokemon, setSelectedPokemonId }) {
         </Title>
       </Stack>
       <Group justify="center" gap="xs">
-        {pokemonTypes[0]}
+        <PokemonTypes types_array={pokemon.types} />
       </Group>
     </div>
   );

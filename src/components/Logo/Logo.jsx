@@ -1,5 +1,5 @@
 import { Image } from "@mantine/core";
-import logoImage from "../images/pokemon_logo.svg";
+import logoImage from "../../images/pokemon_logo.svg";
 export default function Logo() {
   return (
     <a href="/index.html">

@@ -5,12 +5,17 @@ import {
   getLanguageTextEntries,
   getAbilities,
   getEvolutionChain,
-} from "../helpers/helperFN";
-import PokemonStatsInfo from "./PokemonStatsInfo";
+  getHeight,
+  getWeight,
+  getPokemonImages,
+} from "../../helpers/helperFN";
+import PokemonStatsInfo from "../PokemonStatsInfo/PokemonStatsInfo";
+import PokemonTypes from "../PokemonTypes/PokemonTypes";
 
 function PokemonInformation({ pokemon }) {
-  const generationNumber = pokemon.generation.number;
+  console.log(pokemon);
   const lang = getPokemonLanguage(pokemon.id);
+  const pokemon_height = getHeight(pokemon.height);
   const PokemonData = {
     info: {
       description: getLanguageTextEntries(lang, pokemon.flavor_text_entries)[0],
@@ -19,21 +24,20 @@ function PokemonInformation({ pokemon }) {
     },
     tabsData: {
       about: {
-        generation: generationNumber,
         habitat: pokemon.habitat || "Unknown",
         abilities: getAbilities(pokemon.abilities),
-        height: pokemon.height,
-        weight: pokemon.weight,
+        height:
+          pokemon_height < 10 ? `${pokemon_height} m` : `${pokemon_height} cm`,
+        weight: `${getWeight(pokemon.weight)} kg`,
       },
-      evolution: getEvolutionChain(pokemon.evolution),
+      evolution: {
+        generation: pokemon.generation.number,
+        ...getEvolutionChain(pokemon.evolution),
+      },
       stats: pokemon.stats,
     },
   };
-  const pokemonImageSource =
-    pokemon.sprites.other.dream_world.front_default ||
-    pokemon.sprites.other["official-artwork"].front_default;
-  console.log(pokemon);
-  console.log(PokemonData);
+  const pokemonImageSource = getPokemonImages(pokemon.sprites);
   return (
     <>
       <div className="pokemon-details">
@@ -48,9 +52,11 @@ function PokemonInformation({ pokemon }) {
           src={pokemonImageSource}
           alt={pokemon.name}
         />
-        <Group>{PokemonData.info.types[0]}</Group>
+        <Group justify="center" m={`1rem auto`}>
+          <PokemonTypes types_array={pokemon.types} />
+        </Group>
         <Title order={2}>{`${PokemonData.info.genera?.genus}:`}</Title>
-        <Text>{PokemonData.info.description?.flavor_text}</Text>
+        <Text mb={`1rem`}>{PokemonData.info.description?.flavor_text}</Text>
         <PokemonStatsInfo tabsData={PokemonData.tabsData} />
       </div>
     </>

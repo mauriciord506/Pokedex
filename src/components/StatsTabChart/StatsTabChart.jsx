@@ -46,15 +46,7 @@ function Chart({ chartData }) {
         }
   );
 
-  return (
-    <BarChart
-      h={200}
-      dataKey="stat"
-      data={data}
-      series={series}
-      m={`1rem auto`}
-    />
-  );
+  return <BarChart h={200} dataKey="stat" data={data} series={series} />;
 }
 
 export default Chart;
